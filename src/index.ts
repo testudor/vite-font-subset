@@ -19,9 +19,9 @@ export function fontSubsetGenerator(
 	return [
 		{
 			name: "vite-font-subset-generator",
-      enforce: "pre",
+			enforce: "pre",
 			async load(id) {
-        if(!filter(id)) return;
+				if (!filter(id)) return;
 
 				const [importPath, importParams] = splitImportPath(id);
 				if (!importParams) return;
