@@ -1,0 +1,50 @@
+{
+  "name": "vite-font-subset",
+  "version": "0.0.1",
+  "description": "A Vite plugin for font subsetting",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./client": {
+      "types": "./client.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "npm run clean && tsc --module commonjs && shx mv dist/index.js dist/index.cjs && tsc",
+    "clean": "shx rm -rf dist",
+    "lint": "biome check",
+    "format": "biome format",
+    "test": "vitest run"
+  },
+  "author": "Jakob Högerl",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "2.1.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.0.13",
+    "@types/subset-font": "^2.3.0",
+    "shx": "^0.4.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "vite": ">=7.0.0"
+  },
+  "packageManager": "pnpm@10.8.1",
+  "dependencies": {
+    "@rollup/pluginutils": "^5.2.0",
+    "@types/estree": "^1.0.8",
+    "@types/jsonfile": "^6.1.4",
+    "fs-extra": "^11.3.0",
+    "postcss": "^8.5.6",
+    "postcss-value-parser": "^4.2.0",
+    "subset-font": "^2.4.0"
+  }
+}
