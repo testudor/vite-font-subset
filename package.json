@@ -5,19 +5,9 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./client": {
-      "types": "./client.d.ts"
-    }
-  },
   "scripts": {
     "dev": "tsc --watch",
-    "build": "npm run clean && tsc --module commonjs && shx mv dist/index.js dist/index.cjs && tsc",
+    "build": "npm run clean && tsc",
     "clean": "shx rm -rf dist",
     "check": "biome check --write",
     "test": "vitest run"
