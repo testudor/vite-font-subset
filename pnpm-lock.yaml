@@ -11,12 +11,6 @@ importers:
       '@rollup/pluginutils':
         specifier: ^5.2.0
         version: 5.2.0(rollup@4.45.0)
-      '@types/estree':
-        specifier: ^1.0.8
-        version: 1.0.8
-      '@types/jsonfile':
-        specifier: ^6.1.4
-        version: 6.1.4
       fs-extra:
         specifier: ^11.3.0
         version: 11.3.0
@@ -36,9 +30,15 @@ importers:
       '@biomejs/biome':
         specifier: 2.1.1
         version: 2.1.1
+      '@types/estree':
+        specifier: ^1.0.8
+        version: 1.0.8
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
+      '@types/jsonfile':
+        specifier: ^6.1.4
+        version: 6.1.4
       '@types/node':
         specifier: ^24.0.13
         version: 24.0.13
