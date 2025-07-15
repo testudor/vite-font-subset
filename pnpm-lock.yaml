@@ -23,9 +23,6 @@ importers:
       subset-font:
         specifier: ^2.4.0
         version: 2.4.0
-      vite:
-        specifier: '>=7.0.0'
-        version: 7.0.4(@types/node@24.0.13)
     devDependencies:
       '@biomejs/biome':
         specifier: 2.1.1
@@ -51,6 +48,9 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+      vite:
+        specifier: ^7.0.4
+        version: 7.0.4(@types/node@24.0.13)
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@24.0.13)
