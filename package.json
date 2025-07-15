@@ -12,6 +12,9 @@
     "test": "vitest run"
   },
   "author": "Jakob Högerl",
+  "keywords": [
+    "vite-plugin"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "2.1.1",
