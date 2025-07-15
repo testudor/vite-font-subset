@@ -20,8 +20,7 @@
     "build": "npm run clean && tsc --module commonjs && shx mv dist/index.js dist/index.cjs && tsc",
     "clean": "shx rm -rf dist",
     "check": "biome check --write",
-    "test": "vitest run",
-    "prepare": "npm run build"
+    "test": "vitest run"
   },
   "author": "Jakob Högerl",
   "license": "MIT",
