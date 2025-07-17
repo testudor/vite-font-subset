@@ -32,12 +32,7 @@ jobs:
       - name: Build package
         run: pnpm build
 
-      # Add version sync if using release tags
-      - name: Sync package version with release
-        if: github.event_name == 'release'
-        run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
-
       - name: Publish to NPM
-        run: pnpm publish --no-git-checks
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
