@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-font-subset",
+  "name": "@testudor/vite-plugin-font-subset",
   "version": "0.0.2",
   "description": "A Vite plugin for generating font subsets.",
   "main": "./dist/index.js",
