@@ -1,42 +1,43 @@
 {
-  "name": "vite-plugin-font-subset",
-  "version": "0.0.1",
-  "description": "A Vite plugin for generating font subsets.",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "dev": "tsc --watch",
-    "build": "npm run clean && tsc",
-    "clean": "shx rm -rf dist",
-    "check": "biome check --write",
-    "test": "vitest run"
-  },
-  "author": "Jakob Högerl",
-  "keywords": [
-    "vite-plugin"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "2.1.1",
-    "@types/estree": "^1.0.8",
-    "@types/fs-extra": "^11.0.4",
-    "@types/jsonfile": "^6.1.4",
-    "@types/node": "^24.0.13",
-    "@types/subset-font": "^2.3.0",
-    "shx": "^0.4.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.4",
-    "vitest": "^3.2.4"
-  },
-  "peerDependencies": {
-    "vite": ">=5.x || >= 6.x || >= 7.x"
-  },
-  "packageManager": "pnpm@10.8.1",
-  "dependencies": {
-    "@rollup/pluginutils": "^5.2.0",
-    "fs-extra": "^11.3.0",
-    "postcss": "^8.5.6",
-    "postcss-value-parser": "^4.2.0",
-    "subset-font": "^2.4.0"
-  }
+	"name": "vite-plugin-font-subset",
+	"version": "0.0.1",
+	"description": "A Vite plugin for generating font subsets.",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"scripts": {
+		"dev": "tsc --watch",
+		"build": "npm run clean && tsc",
+		"clean": "shx rm -rf dist",
+		"check": "biome check --write",
+		"test": "vitest run"
+	},
+	"author": "Jakob Högerl",
+	"keywords": [
+		"vite-plugin"
+	],
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "2.1.1",
+		"@types/estree": "^1.0.8",
+		"@types/fs-extra": "^11.0.4",
+		"@types/jsonfile": "^6.1.4",
+		"@types/node": "^24.0.13",
+		"@types/subset-font": "^2.3.0",
+		"shx": "^0.4.0",
+		"typescript": "^5.8.3",
+		"vite": "^7.0.4",
+		"vitest": "^3.2.4"
+	},
+	"peerDependencies": {
+		"vite": ">=5.x || >= 6.x || >= 7.x"
+	},
+	"packageManager": "pnpm@10.8.1",
+	"dependencies": {
+		"@rollup/pluginutils": "^5.2.0",
+		"fs-extra": "^11.3.0",
+		"postcss": "^8.5.6",
+		"postcss-value-parser": "^4.2.0",
+		"subset-font": "^2.4.0"
+	}
 }
