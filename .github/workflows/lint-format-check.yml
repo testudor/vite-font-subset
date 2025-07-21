@@ -1,0 +1,29 @@
+name: Lint & Format Check
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latestWW
+    steps:
+      - uses: actions/checkout@v4    
+          
+      - name: Setup BiomeJS
+        uses: biomejs/setup-biome@v2
+
+      - name: Run Lint
+        run: biome lint
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup BiomeJS
+        uses: biomejs/setup-biome@v2
+
+      - name: Run Format Check
+        run: biome format
