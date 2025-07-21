@@ -81,7 +81,7 @@ describe('getSubsetHash', () => {
 
 	it('should return the same hash for different permutations of the same characters', () => {
 		const hash1 = getSubsetHash('abc123');
-		const hash2 = getSubsetHash('abc123');
+		const hash2 = getSubsetHash('321cba');
 
 		expect(hash1).toBe(hash2);
 	});
