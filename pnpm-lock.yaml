@@ -36,9 +36,15 @@ importers:
       '@types/node':
         specifier: ^24.0.13
         version: 24.0.13
+      '@types/object-hash':
+        specifier: ^3.0.6
+        version: 3.0.6
       '@types/subset-font':
         specifier: ^2.3.0
         version: 2.3.0
+      object-hash:
+        specifier: ^3.0.0
+        version: 3.0.0
       shx:
         specifier: ^0.4.0
         version: 0.4.0
@@ -396,6 +402,9 @@ packages:
   '@types/node@24.0.13':
     resolution: {integrity: sha512-Qm9OYVOFHFYg3wJoTSrz80hoec5Lia/dPp84do3X7dZvLikQvM1YpmvTBEdIr/e+U8HTkFjLHLnl78K/qjf+jQ==}
 
+  '@types/object-hash@3.0.6':
+    resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
+
   '@types/subset-font@2.3.0':
     resolution: {integrity: sha512-+u2CzLEE7ZReuBP0Mfz0tBydVZvWESmZpBbL7sc+J+qB9ImNp1QmOptMe28uXj2aRPDoQhQF3dubXMgwo56gIg==}
 
@@ -609,6 +618,10 @@ packages:
   npm-run-path@2.0.2:
     resolution: {integrity: sha512-lJxZYlT4DW/bRUtFh1MQIWqmLwQfAxnqWG4HhEdjMlkrJYnJn0Jrr2u3mgxqaWsdiBc76TYkTG/mhrnYTuzfHw==}
     engines: {node: '>=4'}
+
+  object-hash@3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -1079,6 +1092,8 @@ snapshots:
     dependencies:
       undici-types: 7.8.0
 
+  '@types/object-hash@3.0.6': {}
+
   '@types/subset-font@2.3.0':
     dependencies:
       '@types/node': 24.0.13
@@ -1314,6 +1329,8 @@ snapshots:
   npm-run-path@2.0.2:
     dependencies:
       path-key: 2.0.1
+
+  object-hash@3.0.0: {}
 
   once@1.4.0:
     dependencies:

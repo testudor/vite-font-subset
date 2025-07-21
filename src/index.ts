@@ -1,5 +1,6 @@
 import * as path from "node:path";
 import fs from "fs-extra";
+import hash from "object-hash";
 import postcss from "postcss";
 import valueParser from "postcss-value-parser";
 import subsetFont from "subset-font";
@@ -25,6 +26,16 @@ export function getPathAndParam(
 	} catch {
 		return null;
 	}
+}
+
+export function getSubsetHash(subset: string): string {
+	const subsetChars = [...subset];
+	const subsetCharsSorted = subsetChars.sort();
+	const subsetHash = hash(subsetCharsSorted, { algorithm: "md5" });
+
+	const truncatedHash = subsetHash.slice(0, 8);
+
+	return truncatedHash;
 }
 
 export function fontSubsetGenerator(
@@ -79,13 +90,15 @@ export function fontSubsetGenerator(
 
 			let newFileContent = importContent;
 
+			const subsetHash = getSubsetHash(subsetParam);
+
 			const cwd = process.cwd();
 
 			for await (const relativeSourcePath of uniqueSources) {
 				const absoluteSourcePath = path.join(importDir, relativeSourcePath);
 
 				const sourceFileName = path.basename(relativeSourcePath);
-				const targetFileName = `reduced_${sourceFileName}`;
+				const targetFileName = `reduced_${subsetHash}_${sourceFileName}`;
 
 				const targetPath = path.join(cwd, targetBasePath, targetFileName);
 

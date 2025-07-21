@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getPathAndParam } from '../src/index';
+import { getPathAndParam, getSubsetHash } from '../src/index';
 
 describe('getPathAndParam', () => {
 	it('should return path and subset for valid CSS file with subset param', () => {
@@ -61,5 +61,35 @@ describe('getPathAndParam', () => {
 			path: '/path/to/styles.css',
 			subset: 'Hello World'
 		});
+	});
+});
+
+describe('getSubsetHash', () => {
+	it('should return a hash for a given subset string', () => {
+		const hash = getSubsetHash("abc123");
+
+		expect(typeof hash).toBe('string');
+		expect(hash.length).toBeGreaterThan(0);
+	});
+
+	it('should return the same hash for the same subset string', () => {
+		const hash1 = getSubsetHash("abc123");
+		const hash2 = getSubsetHash("abc123");
+
+		expect(hash1).toBe(hash2);
+	});
+
+	it('should return the same hash for different permutations of the same characters', () => {
+		const hash1 = getSubsetHash('abc123');
+		const hash2 = getSubsetHash('abc123');
+
+		expect(hash1).toBe(hash2);
+	});
+
+	it('should return different hashes for different subset strings', () => {
+		const hash1 = getSubsetHash('abc123');
+		const hash2 = getSubsetHash('xyz789');
+
+		expect(hash1).not.toBe(hash2);
 	});
 });
