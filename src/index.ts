@@ -1,20 +1,25 @@
-import * as path from 'node:path';
-import fs from 'fs-extra';
-import postcss from 'postcss';
-import valueParser from 'postcss-value-parser';
-import subsetFont from 'subset-font';
-import type { Plugin } from 'vite';
-import { normalizePath } from 'vite';
+import * as path from "node:path";
+import fs from "fs-extra";
+import postcss from "postcss";
+import valueParser from "postcss-value-parser";
+import subsetFont from "subset-font";
+import type { Plugin } from "vite";
+import { normalizePath } from "vite";
 
 interface FontSubsetGeneratorOptions {
 	targetBasePath: string;
 }
 
-export function getPathAndParam(id: string): { path: string; subset: string } | null {
+export function getPathAndParam(
+	id: string,
+): { path: string; subset: string } | null {
 	try {
-		const url = new URL(id, 'relative://');
-		if (url.pathname.endsWith('.css') && url.searchParams.has('subset')) {
-			return { path: url.pathname, subset: url.searchParams.get('subset') || '' };
+		const url = new URL(id, "relative://");
+		if (url.pathname.endsWith(".css") && url.searchParams.has("subset")) {
+			return {
+				path: url.pathname,
+				subset: url.searchParams.get("subset") || "",
+			};
 		}
 		return null;
 	} catch {
@@ -22,17 +27,19 @@ export function getPathAndParam(id: string): { path: string; subset: string } | 
 	}
 }
 
-export function fontSubsetGenerator(options?: FontSubsetGeneratorOptions): Plugin {
+export function fontSubsetGenerator(
+	options?: FontSubsetGeneratorOptions,
+): Plugin {
 	const plugin: Plugin = {
-		name: 'vite-font-subset-generator',
-		enforce: 'pre',
+		name: "vite-font-subset-generator",
+		enforce: "pre",
 		async load(id) {
 			const pathAndParam = getPathAndParam(id);
 			if (!pathAndParam) return;
 
 			const { path: importPath, subset: subsetParam } = pathAndParam;
 
-			const importContent = await fs.readFile(importPath, 'utf-8');
+			const importContent = await fs.readFile(importPath, "utf-8");
 			const importDir = path.dirname(importPath);
 
 			const cssRoot = postcss.parse(importContent);
@@ -40,15 +47,19 @@ export function fontSubsetGenerator(options?: FontSubsetGeneratorOptions): Plugi
 			const sources: string[] = [];
 
 			for (const node of cssRoot.nodes) {
-				if (node.type === 'atrule' && node.name === 'font-face' && node.nodes) {
+				if (node.type === "atrule" && node.name === "font-face" && node.nodes) {
 					const fontFace = node;
 
 					fontFace.nodes?.forEach((node) => {
-						if (node.type === 'decl' && node.prop === 'src') {
+						if (node.type === "decl" && node.prop === "src") {
 							const parsed = valueParser(node.value);
 
 							parsed.walk((node) => {
-								if (node.type === 'function' && node.value === 'url' && node.nodes.length > 0) {
+								if (
+									node.type === "function" &&
+									node.value === "url" &&
+									node.nodes.length > 0
+								) {
 									const relativeSource = node.nodes[0].value;
 
 									sources.push(relativeSource);
@@ -61,7 +72,8 @@ export function fontSubsetGenerator(options?: FontSubsetGeneratorOptions): Plugi
 
 			const uniqueSources = new Set(sources).values();
 
-			const targetBasePath = options?.targetBasePath || path.join('src', '.temp');
+			const targetBasePath =
+				options?.targetBasePath || path.join("src", ".temp");
 
 			await fs.mkdir(targetBasePath, { recursive: true });
 
@@ -82,14 +94,17 @@ export function fontSubsetGenerator(options?: FontSubsetGeneratorOptions): Plugi
 
 				await fs.writeFile(targetPath, subsetBuffer);
 
-				newFileContent = newFileContent.replace(relativeSourcePath, normalizePath(targetPath));
+				newFileContent = newFileContent.replace(
+					relativeSourcePath,
+					normalizePath(targetPath),
+				);
 
 				console.log(`Processed font: ${sourceFileName} -> ${targetFileName}`);
 				console.log(`Replaced ${relativeSourcePath} with ${targetPath}`);
 			}
 
 			return newFileContent;
-		}
+		},
 	};
 
 	return plugin;
