@@ -73,7 +73,7 @@ export function fontSubsetGenerator(
 			const uniqueSources = new Set(sources).values();
 
 			const targetBasePath =
-				options?.targetBasePath || path.join("src", ".temp");
+				options?.targetBasePath || path.join("src", ".font-subsets");
 
 			await fs.mkdir(targetBasePath, { recursive: true });
 
