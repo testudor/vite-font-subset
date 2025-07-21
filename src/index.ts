@@ -38,6 +38,35 @@ export function getSubsetHash(subset: string): string {
 	return truncatedHash;
 }
 
+export function extractUniqueSourcesFromCSS(cssContent: string): string[] {
+	const cssRoot = postcss.parse(cssContent);
+	const sources: string[] = [];
+
+	for (const node of cssRoot.nodes) {
+		if (node.type === "atrule" && node.name === "font-face" && node.nodes) {
+			const fontFace = node as postcss.AtRule;
+
+			fontFace.nodes?.forEach((node) => {
+				if (node.type === "decl" && node.prop === "src") {
+					const parsed = valueParser(node.value);
+
+					parsed.walk((node) => {
+						if (
+							node.type === "function" &&
+							node.value === "url" &&
+							node.nodes.length > 0
+						) {
+							sources.push(node.nodes[0].value);
+						}
+					});
+				}
+			});
+		}
+	}
+
+	return [...new Set(sources)]; // Remove duplicates
+}
+
 export function fontSubsetGenerator(
 	options?: FontSubsetGeneratorOptions,
 ): Plugin {
@@ -53,35 +82,7 @@ export function fontSubsetGenerator(
 			const importContent = await fs.readFile(importPath, "utf-8");
 			const importDir = path.dirname(importPath);
 
-			const cssRoot = postcss.parse(importContent);
-
-			const sources: string[] = [];
-
-			for (const node of cssRoot.nodes) {
-				if (node.type === "atrule" && node.name === "font-face" && node.nodes) {
-					const fontFace = node;
-
-					fontFace.nodes?.forEach((node) => {
-						if (node.type === "decl" && node.prop === "src") {
-							const parsed = valueParser(node.value);
-
-							parsed.walk((node) => {
-								if (
-									node.type === "function" &&
-									node.value === "url" &&
-									node.nodes.length > 0
-								) {
-									const relativeSource = node.nodes[0].value;
-
-									sources.push(relativeSource);
-								}
-							});
-						}
-					});
-				}
-			}
-
-			const uniqueSources = new Set(sources).values();
+			const uniqueSources = extractUniqueSourcesFromCSS(importContent);
 
 			const targetBasePath =
 				options?.targetBasePath || path.join("src", ".font-subsets");

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getPathAndParam, getSubsetHash } from '../src/index';
+import { extractUniqueSourcesFromCSS, getPathAndParam, getSubsetHash } from '../src/index';
 
 describe('getPathAndParam', () => {
 	it('should return path and subset for valid CSS file with subset param', () => {
@@ -92,4 +92,75 @@ describe('getSubsetHash', () => {
 
 		expect(hash1).not.toBe(hash2);
 	});
+});
+
+describe('extractSourcesFromCSS', () => {
+    it('should extract font URLs from @font-face rules', () => {
+        const cssContent = `
+            @font-face {
+                font-family: 'MyFont';
+                src: url('/fonts/myfont.woff2') format('woff2'),
+                    url('/fonts/myfont.woff') format('woff');
+            }
+        `;
+
+        const result = extractUniqueSourcesFromCSS(cssContent);
+
+        expect(result).toEqual(['/fonts/myfont.woff2', '/fonts/myfont.woff']);
+    });
+
+    it('should handle multiple @font-face rules', () => {
+        const cssContent = `
+            @font-face {
+                font-family: 'FontOne';
+                src: url('/fonts/fontone.woff2') format('woff2');
+            }
+            @font-face {
+                font-family: 'FontTwo';
+                src: url('/fonts/fonttwo.woff') format('woff');
+            }
+        `;
+
+        const result = extractUniqueSourcesFromCSS(cssContent);
+
+        expect(result).toEqual(['/fonts/fontone.woff2', '/fonts/fonttwo.woff']);
+    });
+
+    it('should remove duplicate URLs', () => {
+        const cssContent = `
+            @font-face {
+                font-family: 'MyFont';
+                src: url('/fonts/myfont.woff2') format('woff2'),
+                    url('/fonts/myfont.woff') format('woff');
+            }
+            @font-face {
+                font-family: 'MyFont';
+                src: url('/fonts/myfont.woff2') format('woff2');
+            }
+        `;
+
+        const result = extractUniqueSourcesFromCSS(cssContent);
+
+        expect(result).toEqual(['/fonts/myfont.woff2', '/fonts/myfont.woff']);
+    });
+
+    it('should return an empty array if no @font-face rules are present', () => {
+        const cssContent = `
+            body {
+                font-family: 'Arial', sans-serif;
+            }
+        `;
+
+        const result = extractUniqueSourcesFromCSS(cssContent);
+
+        expect(result).toEqual([]);
+    });
+
+    it('should handle invalid or empty CSS gracefully', () => {
+        const cssContent = ``;
+
+        const result = extractUniqueSourcesFromCSS(cssContent);
+
+        expect(result).toEqual([]);
+    });
 });
