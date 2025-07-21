@@ -62,7 +62,7 @@ The default `@font-face` rule will be modified to point to the generated subset 
   font-display: swap;
   font-weight: 700;
   src: 
-    url(${CWD}/src/.font-subsets/reduced_chakra-petch-latin-700-normal.woff2) format('woff2'), 
-    url(${CWD}/src/.font-subsets/reduced_chakra-petch-latin-700-normal.woff) format('woff');
+    url(${CWD}/src/.font-subsets/subset_f34507bd_chakra-petch-latin-700-normal.woff2) format('woff2'), 
+    url(${CWD}/src/.font-subsets/subset_f34507bd_chakra-petch-latin-700-normal.woff) format('woff');
 }
 ```
