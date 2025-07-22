@@ -30,10 +30,11 @@ export function getPathAndParam(
 
 export function getSubsetHash(subset: string): string {
 	const subsetChars = [...subset];
-	const subsetCharsSorted = subsetChars.sort();
-	const subsetHash = hash(subsetCharsSorted, {
+
+	const subsetHash = hash(subsetChars, {
 		algorithm: "md5",
 		encoding: "base64",
+		unorderedArrays: true,
 	});
 
 	const truncatedHash = subsetHash.slice(0, 8);
